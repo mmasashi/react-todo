@@ -1,0 +1,50 @@
+// Place all the styles related to the todos controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.Todos {
+  width: 768px;
+  margin: 0 auto;
+}
+
+.Todos-title {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.Todos-container {
+  width: 280px;
+  margin: 20px auto 0 auto;
+}
+
+.NewTodo-container {
+  text-align: center;
+  input[type='text'] {
+    width: 160px;
+  }
+  button {
+    margin-left: 10px;
+  }
+}
+
+.TodoList-container {
+  margin-top: 10px;
+}
+
+.TodoList-tr {
+}
+
+.TodoList-th-done {
+  width: 20px;
+}
+
+.TodoList-td-done {
+  text-align: center;
+}
+
+.TodoList-td-task {
+  &.done {
+    color: #bbb;
+    text-decoration: line-through;
+  }
+}
