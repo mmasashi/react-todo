@@ -13,9 +13,7 @@ class TasksController < ApplicationController
     new_task = params[:task]
     @task = Task.new
     @task.name = new_task[:name]
-    puts "--" * 80
     if @task.save
-    pp @task
       render json: @task
     else
       render nothing: true, status: :bad_request
