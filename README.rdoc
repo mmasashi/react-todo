@@ -1,28 +1,43 @@
-== README
+# React Todo Application (Rails + React)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project is a todo sample application for learning Rails and React.
 
-Things you may want to cover:
+## Prerequisites
 
-* Ruby version
+- Ruby (>= 2.0)
 
-* System dependencies
+## How to setup
 
-* Configuration
+- Install bundler if not installed
 
-* Database creation
+```
+$ gem install bundler
+```
 
-* Database initialization
+- Clone this project to the local
 
-* How to run the test suite
+```
+$ git clone git@github.com:mmasashi/react-todo.git
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+- Change the current directory to `react-todo` and install required gems through bundler
 
-* Deployment instructions
+```
+$ cd react-todo
+$ bundle install
+```
 
-* ...
+- Setup database(sqlite3)
 
+```
+$ bundle exec rake db:setup
+```
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+- Start rails
+
+```
+$ bundle exec rails s
+```
+
+- Access `http://localhost:3000` through your browser
+
