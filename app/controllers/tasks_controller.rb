@@ -31,4 +31,13 @@ class TasksController < ApplicationController
       render nothing: true, status: :bad_request
     end
   end
+
+  def destroy
+    @task = Task.find(params[:id])
+    if @task.delete
+      render json: @task
+    else
+      render nothing: true, status: :bad_request
+    end
+  end
 end

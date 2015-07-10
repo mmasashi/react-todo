@@ -24,7 +24,7 @@ Constants = @Todos.Constants
       </div>
       <div className='Todos-container'>
         <NewTodo ref='newTodo' onCreateTask={@onCreateTask} />
-        <TodoList tasks={@state.tasks} onChangeTask={@onChangeTask} />
+        <TodoList tasks={@state.tasks} onChangeTask={@onChangeTask} deleteTask={@deleteTask}/>
       </div>
     </div>
 
@@ -35,6 +35,9 @@ Constants = @Todos.Constants
     @getFlux().actions.createTask(taskName, () =>
       @refs.newTodo.clearInput()
     )
+
+  deleteTask: (task) ->
+    @getFlux().actions.deleteTask(task)
 
 NewTodo = React.createClass
   propTypes: ->
@@ -69,6 +72,7 @@ TodoList = React.createClass
           <tr>
             <th className='TodoList-th-done'>Done</th>
             <th className='TodoList-th-task'>Task</th>
+            <th className='TodoList-th-edit'>EDIT</th>
           </tr>
         </thead>
         <tbody>
@@ -79,12 +83,13 @@ TodoList = React.createClass
 
   render_tasks: ->
     for task in @props.tasks
-      <TodoTask key={task.id} task={task} onChangeTask={@props.onChangeTask} />
+      <TodoTask key={task.id} task={task} onChangeTask={@props.onChangeTask} deleteTask={@props.deleteTask}/>
 
 TodoTask = React.createClass
   propTypes: ->
     task: React.PropTypes.object.isRequired
     onChangeTask: React.PropTypes.object
+    deleteTask: React.PropTypes.object
 
   render: ->
     task = @props.task
@@ -98,6 +103,12 @@ TodoTask = React.createClass
         />
       </td>
       <td className="TodoList-td-task #{taskClass}">{task.name}</td>
+      <td>
+        <button
+          type='button'
+          className='btn btn-danger'
+          onClick={@deleteTask}>DELETE</button>
+      </td>
     </tr>
 
   onChange: (event) ->
@@ -105,3 +116,7 @@ TodoTask = React.createClass
     task.done = !task.done
     if @props.onChangeTask
       @props.onChangeTask(task)
+
+  deleteTask: (event) ->
+    task = @props.task
+    if task != '' && @props.deleteTask then @props.deleteTask(task)

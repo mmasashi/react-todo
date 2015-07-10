@@ -48,3 +48,17 @@ Constants = @Todos.Constants
       callback() if callback?
     )
 
+  deleteTask: (task, callback) ->
+    @dispatch(Constants.DELETE_TASK_VALUE, task)
+    url = Constants.DELETE_TASK_URL.replace(/:id/, task.id)
+    data =
+      _method: 'DELETE'
+      task: task
+    $.ajax(
+      url: url
+      type: 'POST'
+      data: data
+    ).done((data, textStatus, jqXHR) =>
+      @dispatch(Constants.DELETE_TASK_VALUE, data)
+      callback() if callback?
+    )
