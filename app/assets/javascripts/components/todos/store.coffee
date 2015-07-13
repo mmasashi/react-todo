@@ -27,6 +27,10 @@ TodosStore = Fluxxor.createStore
       @tasks.unshift(newTask)
     @emit('change')
 
+  onDeleteTaskValue: (task) ->
+    @_deleteTask(task.id)
+    @emit('change')
+
   _initializePersistentState: ->
     # Task
     #  id: <Integer>
@@ -41,6 +45,7 @@ TodosStore = Fluxxor.createStore
     @bindActions(
       Constants.FETCH_TASKS, @onFetchTasks
       Constants.UPDATE_TASK_VALUE, @onUpdateTaskValue
+      Constants.DELETE_TASK_VALUE, @onDeleteTaskValue
     )
 
   _findTask: (task_id) ->
@@ -48,6 +53,12 @@ TodosStore = Fluxxor.createStore
       if task.id == task_id
         return task
     return null
+
+  _deleteTask: (task_id) ->
+    for task, i in @tasks
+      if task.id == task_id
+        @tasks.splice(i,1)
+        return
 
 #
 # Todos Stores
