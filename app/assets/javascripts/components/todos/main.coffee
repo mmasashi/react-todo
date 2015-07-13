@@ -24,7 +24,7 @@ Constants = @Todos.Constants
       </div>
       <div className='Todos-container'>
         <NewTodo ref='newTodo' onCreateTask={@onCreateTask} />
-        <TodoList tasks={@state.tasks} onChangeTask={@onChangeTask} deleteTask={@deleteTask}/>
+        <TodoList tasks={@state.tasks} onChangeTask={@onChangeTask} onDeleteTask={@onDeleteTask}/>
       </div>
     </div>
 
@@ -36,7 +36,7 @@ Constants = @Todos.Constants
       @refs.newTodo.clearInput()
     )
 
-  deleteTask: (task) ->
+  onDeleteTask: (task) ->
     @getFlux().actions.deleteTask(task)
 
 NewTodo = React.createClass
@@ -64,6 +64,7 @@ TodoList = React.createClass
   propTypes: ->
     tasks: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
     onChangeTask: React.PropTypes.object
+    onDeleteTask: React.PropTypes.object
 
   render: ->
     <div className='TodoList-container'>
@@ -83,13 +84,13 @@ TodoList = React.createClass
 
   render_tasks: ->
     for task in @props.tasks
-      <TodoTask key={task.id} task={task} onChangeTask={@props.onChangeTask} deleteTask={@props.deleteTask}/>
+      <TodoTask key={task.id} task={task} onChangeTask={@props.onChangeTask} onDeleteTask={@props.onDeleteTask}/>
 
 TodoTask = React.createClass
   propTypes: ->
     task: React.PropTypes.object.isRequired
     onChangeTask: React.PropTypes.object
-    deleteTask: React.PropTypes.object
+    onDeleteTask: React.PropTypes.object
 
   render: ->
     task = @props.task
@@ -107,7 +108,7 @@ TodoTask = React.createClass
         <button
           type='button'
           className='btn btn-danger'
-          onClick={@deleteTask}>DELETE</button>
+          onClick={@onDeleteTask}>DELETE</button>
       </td>
     </tr>
 
@@ -117,6 +118,6 @@ TodoTask = React.createClass
     if @props.onChangeTask
       @props.onChangeTask(task)
 
-  deleteTask: (event) ->
+  onDeleteTask: (event) ->
     task = @props.task
-    if task != '' && @props.deleteTask then @props.deleteTask(task)
+    if task != '' && @props.onDeleteTask then @props.onDeleteTask(task)
